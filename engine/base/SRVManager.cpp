@@ -65,7 +65,7 @@ void SRVManager::CreateSRVForStructuredBuffer(uint32_t srvIndex, ID3D12Resource*
 	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 	srvDesc.Buffer.NumElements = numElements;
 	srvDesc.Buffer.StructureByteStride = structureByteStride;
-	srvDesc.Buffer.Flags = D3D12_BUFFER_SRV_FLAG_NONE; // 必要なら RAW を設定
+	srvDesc.Buffer.Flags = D3D12_BUFFER_SRV_FLAG_NONE;
 	// 設定を元に SRV を生成
 	directXBase_->GetDevice()->CreateShaderResourceView(resource, &srvDesc, GetCPUDescriptorHandle(srvIndex));
 }
