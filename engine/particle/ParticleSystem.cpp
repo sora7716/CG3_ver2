@@ -50,9 +50,9 @@ void ParticleSystem::Update() {
 			// パーティクルの色を設定
 			instancingData_[numInstance_].color.SetRGB((*it).color.GetRGB());
 			//Field内のParticleには加速度を適用する
-			if (IsCollision(accelerationField_.area, (*it).transform.translate)) {
+			/*if (IsCollision(accelerationField_.area, (*it).transform.translate)) {
 				(*it).velocity += accelerationField_.acceleration * Math::kDeltaTime;
-			}
+			}*/
 			//移動
 			(*it).transform.translate += (*it).velocity * Math::kDeltaTime;
 			//経過時間を足す
@@ -243,7 +243,7 @@ void ParticleSystem::UpdateWorldTransform(uint32_t numInstance, auto iterator) {
 //ストラクチャバッファの生成
 void ParticleSystem::CreateStructuredBuffer() {
 	//ストラクチャバッファを生成
-	srvIndex_ = SRVManager::GetInstance()->Allocate();
+	srvIndex_ = SRVManager::GetInstance()->Allocate() + TextureManager::kSRVIndexTop;
 	SRVManager::GetInstance()->CreateSRVForStructuredBuffer(
 		srvIndex_,
 		instancingResource_.Get(),

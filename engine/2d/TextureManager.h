@@ -83,16 +83,16 @@ private://メンバ関数
 	TextureManager(TextureManager&) = delete;
 	//代入演算子の禁止
 	TextureManager& operator=(TextureManager&) = delete;
-private://静的メンバ変数
+public://静的メンバ変数
 	//TextureManagerのインスタンス
 	static TextureManager* instance;
-	//SRVインデックスの開始番号
-	static uint32_t kSRVIndexTop;
+	//SRVインデックスの開始番号(ImGuiで0番目を使用するため、1番目から使用)
+	static inline const uint32_t kSRVIndexTop = 1;
 	//Finalizeしたかのフラグ
 	static inline bool isFinalize = false;
 private://メンバ変数
 	//テクスチャデータ
-	std::unordered_map<std::string, TextureData>textureDatas_;
+	std::unordered_map<std::string, TextureData>textureDates_;
 	//DirectX基盤
 	DirectXBase* directXBase_ = nullptr;
 	//SRVの管理

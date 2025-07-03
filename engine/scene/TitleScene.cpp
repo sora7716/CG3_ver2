@@ -27,7 +27,8 @@ void TitleScene::Initialize(DirectXBase* directXBase) {
 	worldTransform3d_.translate = { 0.0f,0.0f,0.0f };
 	object3d_->Initialize();
 	object3d_->SetModel("axis");
-	object3d_->SetTexture("uvChecker");
+	object3d_->SetTexture("uvChecker.png");
+	object3d_->SetTexture("monsterBall.png");
 
 	directionalLight_.color = { 1.0f,1.0f,1.0f,1.0f };
 	directionalLight_.intensity = 1.0f;
@@ -52,7 +53,7 @@ void TitleScene::Update() {
 
 	sprite_->Update();
 
-//	particleSystem_->Update();
+	particleSystem_->Update();
 #ifdef USE_IMGUI
 	ImGui::Begin("2d");
 	ImGui::DragFloat2("scale", &worldTransform2d_.scale.x, 0.1f);
@@ -72,7 +73,7 @@ void TitleScene::Update() {
 	ImGui::Begin("light");
 	ImGui::ColorEdit4("color", &directionalLight_.color.x);
 	ImGui::DragFloat3("direction", &directionalLight_.direction.x, 0.1f);
-	ImGui::DragFloat("intensity", &directionalLight_.intensity,0.1f,0.0f,10.0f);
+	ImGui::DragFloat("intensity", &directionalLight_.intensity, 0.1f, 0.0f, 10.0f);
 	ImGui::End();
 
 	ImGui::Begin("blend");
@@ -92,10 +93,10 @@ void TitleScene::Update() {
 
 //描画
 void TitleScene::Draw() {
-	object3d_->Draw();
+	/*object3d_->Draw();
 	object2d_->Draw();
-	sprite_->Draw();
-	//particleSystem_->Draw();
+	sprite_->Draw();*/
+	particleSystem_->Draw();
 }
 
 //終了

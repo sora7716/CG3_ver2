@@ -152,7 +152,7 @@ private://メンバ関数
 	bool IsCollision(const AABB& aabb, const Vector3& point);
 private://静的メンバ変数
 	//パーティクルの数
-	static const uint32_t kNumMaxInstance = 1024;
+	static const uint32_t kNumMaxInstance = 10;
 private://メンバ変数
 	//DirectXの基盤部分	
 	DirectXBase* directXBase_ = nullptr;

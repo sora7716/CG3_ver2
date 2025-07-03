@@ -10,8 +10,6 @@
 using namespace Microsoft::WRL;
 //初期化
 TextureManager* TextureManager::instance = nullptr;
-//ImGuiで0番目を使用するため、1番目から使用
-uint32_t TextureManager::kSRVIndexTop = 1;
 
 //インスタンスのゲッター
 TextureManager* TextureManager::GetInstance() {
@@ -29,13 +27,13 @@ void TextureManager::Initialize(DirectXBase* directXBase) {
 	//SRVの管理を記録する
 	srvManager_ = SRVManager::GetInstance();
 	//SRVの数と同数
-	textureDatas_.reserve(SRVManager::kMaxSRVCount);
+	textureDates_.reserve(SRVManager::kMaxSRVCount);
 }
 
 //テクスチャファイルの読み込み
 void TextureManager::LoadTexture(const std::string& filePath) {
 	//読み込み済みテクスチャを検索
-	if (textureDatas_.contains(filePath)) {
+	if (textureDates_.contains(filePath)) {
 		//読み込み済みなら早期リターン
 		return;
 	}
@@ -54,7 +52,7 @@ void TextureManager::LoadTexture(const std::string& filePath) {
 	assert(srvManager_->TextureLimitCheck(kSRVIndexTop));
 
 	//追加したテクスチャデータの参照を取得する
-	TextureData& textureData = textureDatas_[filePath];
+	TextureData& textureData = textureDates_[filePath];
 	textureData.metadata = mipImages.GetMetadata();
 	textureData.resourece = directXBase_->CreateTextureResource(textureData.metadata);
 	textureData.intermediateResource = directXBase_->UploadTextureData(textureData.resourece.Get(), mipImages);
@@ -68,10 +66,10 @@ void TextureManager::LoadTexture(const std::string& filePath) {
 
 //テクスチャファイルのアンロード
 void TextureManager::UnloadTexture(const std::string& filePath){
-	auto it = textureDatas_.find(filePath);
-	if (it != textureDatas_.end()) {
+	auto it = textureDates_.find(filePath);
+	if (it != textureDates_.end()) {
 		SRVManager::GetInstance()->Free(it->second.srvIndex);//srvIndexの解放
-		textureDatas_.erase(it);//削除
+		textureDates_.erase(it);//削除
 	} else {
 		return;//存在しない場合何もしない
 	}
@@ -80,17 +78,17 @@ void TextureManager::UnloadTexture(const std::string& filePath){
 // メタデータの取得
 const DirectX::TexMetadata& TextureManager::GetMetaData(const std::string& filePath) {
 	// TODO: return ステートメントをここに挿入します
-	return textureDatas_[filePath].metadata;
+	return textureDates_[filePath].metadata;
 }
 
 // SRVインデックスの取得
 uint32_t TextureManager::GetSRVIndex(const std::string& filePath) {
-	return textureDatas_[filePath].srvIndex;
+	return textureDates_[filePath].srvIndex;
 }
 
 // GPUハンドルの取得
 D3D12_GPU_DESCRIPTOR_HANDLE TextureManager::GetSRVHandleGPU(const std::string& filePath) {
-	return textureDatas_[filePath].srvHandleGPU;
+	return textureDates_[filePath].srvHandleGPU;
 }
 
 //終了処理
