@@ -81,12 +81,6 @@ public://メンバ関数
 	/// </summary>
 	void Draw();
 
-	/// <summary>
-	/// 終了
-	/// </summary>
-	void Finalize();
-
-
 	std::string GetTextureName();
 private://メンバ関数
 	/// <summary>

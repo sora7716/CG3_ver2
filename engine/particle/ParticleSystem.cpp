@@ -109,11 +109,6 @@ void ParticleSystem::Draw() {
 	directXBase_->GetCommandList()->DrawIndexedInstanced(static_cast<UINT>(modelData_.vertices.size()), numInstance_, 0, 0, 0);
 }
 
-//終了
-void ParticleSystem::Finalize() {
-
-}
-
 std::string ParticleSystem::GetTextureName() {
 	return modelData_.material.textureFilePath;
 }
